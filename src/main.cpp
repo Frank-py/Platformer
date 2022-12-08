@@ -110,10 +110,12 @@ while (gameRunning)
 
     std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
     PlayerEntity.update(deltaTime);
+    std::cout << std::endl;
+    
     if (PlayerEntity.collision(grassEntities)) {
+        std::cout << "this shit isnt working \n";
         PlayerEntity.setPos(alte);
     }
-    std::cout << std::endl;
     
 
 
