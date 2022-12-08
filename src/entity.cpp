@@ -26,9 +26,9 @@ for (Entity e: Entities)
         {
                 if ((pos.y+getCurrentFrame().h*4 > e.pos.y && pos.y < e.pos.y+e.getCurrentFrame().h*4) && (pos.x+getCurrentFrame().w*4 > e.pos.x && pos.x < e.pos.x+e.getCurrentFrame().w*4)) {
                         std::cout << "collision" << std::endl;                       
-
+                        return true;
                 }
 
         }
-        return true;
+        return false;
 }

@@ -18,8 +18,7 @@ void Character::reset()  {
         acceleration.y = 0;
         velocity.x = 0;
         velocity.y = 0;
-        pos.x = 0;
-        pos.y =0;
+        
         
 
 }

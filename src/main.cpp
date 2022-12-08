@@ -114,6 +114,7 @@ while (gameRunning)
     
     if (PlayerEntity.collision(grassEntities)) {
         std::cout << "this shit isnt working \n";
+        PlayerEntity.reset();
         PlayerEntity.setPos(alte);
     }
     
@@ -130,7 +131,8 @@ while (gameRunning)
                     {
                     case SDLK_f:  window.ToggleFullscreen(); break;
                     case SDLK_q: gameRunning = false; break;
-                    case SDLK_e: PlayerEntity.reset();
+                    case SDLK_e: PlayerEntity.reset(); PlayerEntity.pos.x = 0; PlayerEntity.pos.y =0;
+
                     }
                 }
             }
