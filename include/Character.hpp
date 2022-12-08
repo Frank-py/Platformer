@@ -13,10 +13,13 @@ public:
     std::vector<SDL_Rect> animationFrames;
     Vector2f frame_size, framesAmount;
     void Animation();
-    void move(int dir);
-    bool collision(std::vector<Grass>* grassEntitiees);
-    void update(int time, std::vector<Grass>* grassEntitiees);
-private:
-    float xaccel, yaccel, xvel, yvel = 0;
+    void move(int dir, int time);
+    void update(int time);
+    void reset();
 
+private:
+    Vector2f acceleration = Vector2f();
+    Vector2f velocity = Vector2f();
+    double ACCEL = 0.1;
+    double GRAVITY = 0.08;
 };

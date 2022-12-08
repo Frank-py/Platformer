@@ -12,7 +12,17 @@ Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
         framesAmount.y = 2;
         
 }
+void Character::reset()  {
+        GRAVITY = 0.08;
+        acceleration.x = 0;
+        acceleration.y = 0;
+        velocity.x = 0;
+        velocity.y = 0;
+        pos.x = 0;
+        pos.y =0;
+        
 
+}
 
 void Character::Animation(){
         static int counter = 0;
@@ -29,64 +39,50 @@ void Character::Animation(){
 }
 
 
-void Character::move(int dir)
+void Character::move(int dir, int time)
 {
+
+        
+
    switch (dir)
         {
                 case 0:
-                        yaccel = -1.5;
+                        acceleration.y = -ACCEL;
+                        GRAVITY = 0.08;
+                        acceleration.y -= GRAVITY;
+                        
                         break;
                 case 1:
-                        xaccel = -1.5;
+                        acceleration.x = -ACCEL;
                         break;
                 case 2:
-                        xaccel = 1.5;
+                        acceleration.x = +ACCEL;
                         break;
                 case 3:
-                        yaccel = 1.5;
+                        acceleration.x = 0;
+                        acceleration.y += GRAVITY; 
+                        velocity.x = 0;
+                        velocity.y = 0;
                         break;
-                //case 4:
-                        //yaccel = 2;
+                default:
+                        break;
         }
         return;
         
 }
 
 
-void Character::update(int time, std::vector<Grass>* grassEntitiees)
+void Character::update(int time)
 {
-        if (yvel == 0 && xvel == 0){
-                Animation();
-        }
+        Animation();
+        GRAVITY *= 1.03;
+        
+        velocity += acceleration * time;
+        pos += velocity * time;
 
-        xvel = xaccel * time;
-        yvel = yaccel * time;
-
-        if (!(collision(grassEntitiees))){
-                pos.y += yvel;
-                pos.x += xvel;
-                //yaccel = 2;
-        }
-        yaccel = 0;
-        xaccel = 0;
+        acceleration = Vector2f();
 }
 
 
 
 
-bool Character::collision(std::vector<Grass>* grassEntitiees){
-        for (Grass& e : *grassEntitiees){
-                        if (
-                                e.pos.x + e.currentFrame.w*4 >= pos.x+xvel+15*4 &&
-                                pos.x+xvel-13*4 + currentFrame.w*4 >= e.pos.x &&
-                                e.pos.y + e.currentFrame.h*4 >= pos.y+yvel+15*4 &&
-                                pos.y+yvel-8*4 + currentFrame.h*4 >= e.pos.y
-                        )
-                        {
-                                std::cout << "true\n";
-                                        return true;
-                        }
-        }
-                                std::cout << "false\n";
-        return false;
-}	

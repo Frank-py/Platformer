@@ -32,6 +32,7 @@ RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 
 
 	ToggleFullscreen();
+	SDL_ShowCursor(1);
 	}
 
 SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
@@ -70,6 +71,20 @@ void RenderWindow::render(Entity& p_entity)
 	dst.h = p_entity.getCurrentFrame().h * 4;
 
 	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dst);
+}
+void RenderWindow::renderbg(SDL_Texture* tex, int Groesex, int Groesey) {
+	SDL_Rect src;
+	src.x = 0;
+	src.y = 0;
+	src.w = 1000;
+	src.h = 527;
+
+	SDL_Rect dst;
+	dst.x = 0;
+	dst.y = 0;
+	dst.w = Groesex;
+	dst.h = Groesey;
+	SDL_RenderCopy(renderer, tex, &src, &dst);
 }
 
 void RenderWindow::display()

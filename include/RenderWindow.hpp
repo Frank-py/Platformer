@@ -12,6 +12,8 @@ public:
 	void cleanUp();
 	void clear();
 	void render(Entity& p_entity);
+	void renderbg(SDL_Texture* tex, int Groesex, int Groesey);
+
 	void ToggleFullscreen();
 	void display();
 private:

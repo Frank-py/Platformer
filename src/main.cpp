@@ -1,8 +1,8 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+//#include <SDL2/SDL_ttf.h>
+//#include <SDL2/SDL_mixer.h>
 #include <iostream>
 #include <vector>
 
@@ -22,17 +22,17 @@ TTF_Font* font24 = TTF_OpenFont("res/font/font.ttf", 24);
 Mix_Chunk* chargeSfx = Mix_LoadWAV("res/sfx/charge.mp3");
 Mix_Chunk* swingSfx = Mix_LoadWAV("res/sfx/swing.mp3");
 Mix_Chunk* holeSfx = Mix_LoadWAV("res/sfx/hole.mp3");
-	TTF_CloseFont(font32);
-	TTF_CloseFont(font24);
-	SDL_Quit();
-	TTF_Quit();
-	Mix_PlayChannel(-1, swingSfx, 0);
-		window.renderCenter(0, 0 + 3, "POLYMARS", font32, black);
-		window.renderCenter(0, 0, "POLYMARS", font32, white);
-	deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
+TTF_CloseFont(font32);
+TTF_CloseFont(font24);
+SDL_Quit();
+TTF_Quit();
+Mix_PlayChannel(-1, swingSfx, 0);
+    window.renderCenter(0, 0 + 3, "POLYMARS", font32, black);
+    window.renderCenter(0, 0, "POLYMARS", font32, white);
+deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
 */
 
-				
+            
 // bool collide(std::vector<Grass> blocks, Character player){
 // for (Grass& e : blocks){
 // 		if (
@@ -54,103 +54,101 @@ Mix_Chunk* holeSfx = Mix_LoadWAV("res/sfx/hole.mp3");
 
 int main(int argc, char* args[])
 {
-	if (SDL_Init(SDL_INIT_VIDEO) > 0)
-		std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
+if (SDL_Init(SDL_INIT_VIDEO) > 0)
+    std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
 
-	if (!(IMG_Init(IMG_INIT_PNG)))
-		std::cout << "IMG_init has failed. Error: " << SDL_GetError() << std::endl;
+if (!(IMG_Init(IMG_INIT_PNG)))
+    std::cout << "IMG_init has failed. Error: " << SDL_GetError() << std::endl;
 
-	if (TTF_Init() == -1)
-		std::cout << "TTF_init has failed. Error: " << SDL_GetError() << std::endl;
-	
-	// Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-	SDL_GetCurrentDisplayMode(0, &DM);
-	RenderWindow window("Spiel", DM.w, DM.h);
-	
-	SDL_Texture* grass = window.loadTexture("bin/debug/res/gfx/ground_grass_1.png");
-	SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idle.png");
-    //std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
-    std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
-	for (int i = 128; i < DM.w; i+=128)
-	{
-		grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
-	};
-	grassEntitiees.push_back(Grass(Vector2f(200, 500), grass));
-	Character PlayerEntity = Character(Vector2f(DM.w/2, DM.h-400), Player);
+//if (TTF_Init() == -1)
+//	std::cout << "TTF_init has failed. Error: " << SDL_GetError() << std::endl;
+
+// Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+SDL_GetCurrentDisplayMode(0, &DM);
+RenderWindow window("Spiel", DM.w, DM.h);
 
 
-
-	
-	bool gameRunning = true;
-
-	SDL_Event event;
-	currentTick = SDL_GetPerformanceCounter();
-
-	const Uint8 *keystate = SDL_GetKeyboardState(NULL);
-	while (gameRunning)
-	{
-		std::cout << PlayerEntity.pos.x << " " << PlayerEntity.pos.y << std::endl;
-		lastTick = currentTick;
-		currentTick = SDL_GetPerformanceCounter();
-        deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
-		bool keypressed = false;
-	
-		if (keystate[SDL_SCANCODE_W]){
-			PlayerEntity.move(0);
-			keypressed = true;
-			//PlayerEntity.update(deltaTime);
-		}
-		if (keystate[SDL_SCANCODE_A]){
-			PlayerEntity.move(1);
-			//PlayerEntity.update(deltaTime);
-		}
-		if (keystate[SDL_SCANCODE_D]){
-			PlayerEntity.move(2);
-
-			//PlayerEntity.update(deltaTime);
-		}
-		if (keystate[SDL_SCANCODE_S]){
-			PlayerEntity.move(3);
-			//PlayerEntity.update(deltaTime);
-		}
-		if (!(keypressed)){
-			PlayerEntity.move(4);
-		}
-		PlayerEntity.update(deltaTime, &grassEntitiees);
-		keypressed = false;
-		//PlayerEntity.Gravity();
-		//
-
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type) {
-				case SDL_QUIT:
-            		gameRunning = false;
-            		break;
-				case SDL_KEYDOWN:
-    				switch (event.key.keysym.sym)
-    					{
-        				case SDLK_f:  window.ToggleFullscreen(); break;
-        				case SDLK_q: gameRunning = false; break;
-						case SDLK_e: PlayerEntity.pos.x = 0; PlayerEntity.pos.y =0;}
-    				}
-				}
+SDL_Texture* grass = window.loadTexture("bin/debug/res/gfx/ground_grass_1.png");
+SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idle.png");
+SDL_Texture* Hintergrund = window.loadTexture("bin/debug/res/gfx/sky.png");
+//std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
+std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
+for (int i = 128; i < DM.w; i+=128)
+{
+    grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
+};
+grassEntitiees.push_back(Grass(Vector2f(200, 500), grass));
+Character PlayerEntity = Character(Vector2f(DM.w/2, DM.h-400), Player);
 
 
-                window.clear();
-				window.render(PlayerEntity);
-                for (Grass& e : grassEntitiees)
-                { 
-                        window.render(e);
-                }
-                window.display();
+
+
+bool gameRunning = true;
+
+SDL_Event event;
+currentTick = SDL_GetPerformanceCounter();
+
+const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+while (gameRunning)
+{
+    Vector2f alte = PlayerEntity.getPosCopy();
+    lastTick = currentTick;
+    currentTick = SDL_GetPerformanceCounter();
+    deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
+
+
+    PlayerEntity.move(3, deltaTime);
+    if (keystate[SDL_SCANCODE_W]){
+        PlayerEntity.move(0, deltaTime);
     }
-	window.cleanUp();
-	// TTF_CloseFont(font32);
-    // TTF_CloseFont(font24);
-	TTF_Quit();
+    if (keystate[SDL_SCANCODE_A]){
+        PlayerEntity.move(1, deltaTime);
+    }
+    if (keystate[SDL_SCANCODE_D]){
+        PlayerEntity.move(2, deltaTime);
+    }
 
-	SDL_Quit();
+    std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
+    PlayerEntity.update(deltaTime);
+    if (PlayerEntity.collision(grassEntities)) {
+        PlayerEntity.setPos(alte);
+    }
+    std::cout << std::endl;
+    
 
-	return 0;
+
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type) {
+            case SDL_QUIT:
+                gameRunning = false;
+                break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.sym)
+                    {
+                    case SDLK_f:  window.ToggleFullscreen(); break;
+                    case SDLK_q: gameRunning = false; break;
+                    case SDLK_e: PlayerEntity.reset();
+                    }
+                }
+            }
+
+
+            window.clear();
+            window.renderbg(Hintergrund, DM.w, DM.h);
+            window.render(PlayerEntity);
+            for (Grass& e : grassEntitiees)
+            { 
+                    window.render(e);
+            }
+            window.display();
+}
+window.cleanUp();
+// TTF_CloseFont(font32);
+// TTF_CloseFont(font24);
+//	TTF_Quit();
+
+SDL_Quit();
+
+return 0;
 }

@@ -1,4 +1,8 @@
 {
+
+
+    //
+
     "files.associations": {
         "array": "cpp",
         "atomic": "cpp",
@@ -47,5 +51,6 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
