@@ -98,7 +98,6 @@ while (gameRunning)
     deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
 
 
-    PlayerEntity.move(3, deltaTime);
     if (keystate[SDL_SCANCODE_W]){
         PlayerEntity.move(0, deltaTime);
     }

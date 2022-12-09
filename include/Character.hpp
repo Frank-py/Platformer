@@ -21,6 +21,6 @@ public:
 
 private:
     Vector2f acceleration = Vector2f();
-    double ACCEL = 0.1;
-    double GRAVITY = 0.08;
+    const double ACCEL = 0.5;
+    double GRAVITY = 0.000005;
 };

@@ -45,22 +45,18 @@ void Character::move(int dir, int time)
 
    switch (dir)
         {
-                case 0:
+                case 0: //  up
                         acceleration.y = -ACCEL;
                         acceleration.y += GRAVITY;
                         
                         break;
-                case 1:
+                case 1: // left
                         acceleration.x = -ACCEL;
+                        acceleration.y += GRAVITY;
                         break;
-                case 2:
+                case 2: // right
                         acceleration.x = +ACCEL;
-                        break;
-                case 3:
-                        acceleration.x = 0;
-                        acceleration.y += GRAVITY; 
-                        velocity.x = 0;
-                        velocity.y = 0;
+                        acceleration.y += GRAVITY;
                         break;
                 default:
                         break;
@@ -73,13 +69,18 @@ void Character::move(int dir, int time)
 void Character::update(int time)
 {
         Animation();
-        GRAVITY *= 1.03;
+
         
-        velocity += acceleration * time;
-        pos += velocity * time;
+        velocity = acceleration * time;
+        //pos += velocity * time;
+        pos += velocity;
 
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
-        acceleration = Vector2f();
+        //acceleration = Vector2f();
+        acceleration.x *= 0.99;
+        acceleration.y += GRAVITY; 
+
+
 }
 
 
@@ -90,9 +91,9 @@ bool Character::collision(std::vector<Entity> Entities, int time) {
         
 
         Vector2f fvelocity = velocity;
-        fvelocity += acceleration * time;
+        fvelocity = acceleration * time;
         Vector2f fpos = pos;
-        fpos += velocity * time;
+        fpos += velocity;
 
 for (Entity e: Entities)
         {
@@ -110,7 +111,7 @@ for (Entity e: Entities)
                 } 
                 else if (fvelocity.y != 0) {
                         acceleration.y = 0;
-                        GRAVITY = 0.08;
+
                     return 4;
                 } 
 
