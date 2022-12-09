@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-
+#include "Math.hpp"
 struct Vector2f
 {
   Vector2f()
@@ -23,6 +23,10 @@ struct Vector2f
     return Vector2f(x * scalar, y * scalar);
   }
 
+  Vector2f operator*(const int& scalar) const
+  {
+    return Vector2f(x * scalar, y * scalar);
+  }
   //Define the *= operator in terms of the * operator:
   Vector2f& operator*=(const float& scalar)
   {

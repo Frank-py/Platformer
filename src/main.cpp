@@ -78,6 +78,7 @@ for (int i = 128; i < DM.w; i+=128)
     grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
 };
 grassEntitiees.push_back(Grass(Vector2f(200, 500), grass));
+grassEntitiees.push_back(Grass(Vector2f(0, DM.h-2*128), grass));
 Character PlayerEntity = Character(Vector2f(DM.w/2, DM.h-400), Player);
 
 
@@ -107,16 +108,15 @@ while (gameRunning)
     if (keystate[SDL_SCANCODE_D]){
         PlayerEntity.move(2, deltaTime);
     }
+    if (keystate[SDL_SCANCODE_S]){
+        PlayerEntity.move(5, deltaTime);
+    }
 
     std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
+    PlayerEntity.collision(grassEntities, deltaTime);
     PlayerEntity.update(deltaTime);
     std::cout << std::endl;
     
-    if (PlayerEntity.collision(grassEntities)) {
-        std::cout << "this shit isnt working \n";
-        PlayerEntity.reset();
-        PlayerEntity.setPos(alte);
-    }
     
 
 

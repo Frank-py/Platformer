@@ -16,10 +16,11 @@ public:
     void move(int dir, int time);
     void update(int time);
     void reset();
+    Vector2f velocity = Vector2f();
+	bool collision(std::vector<Entity> Entities, int time);
 
 private:
     Vector2f acceleration = Vector2f();
-    Vector2f velocity = Vector2f();
     double ACCEL = 0.1;
     double GRAVITY = 0.08;
 };

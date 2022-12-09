@@ -23,7 +23,6 @@ public:
 		pos.y = posold.y;
 	}
 	SDL_Texture* getTex();
-	bool collision(std::vector<Entity> Entities);
 	SDL_Rect getCurrentFrame();
 	SDL_Rect currentFrame;
 	Vector2f pos;
