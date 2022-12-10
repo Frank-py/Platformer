@@ -79,9 +79,9 @@ for (int i = 128; i < DM.w; i+=128)
 {
     grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
 };
-grassEntitiees.push_back(Grass(Vector2f(200, 500), grass));
+grassEntitiees.push_back(Grass(Vector2f(200, 700), grass));
 grassEntitiees.push_back(Grass(Vector2f(0, DM.h-2*128), grass));
-Character PlayerEntity = Character(Vector2f(DM.w/2, DM.h-400), Player);
+Character PlayerEntity = Character(Vector2f(DM.w/2, 0), Player);
 
 
 
@@ -89,8 +89,6 @@ Character PlayerEntity = Character(Vector2f(DM.w/2, DM.h-400), Player);
 bool gameRunning = true;
 
 SDL_Event event;
-currentTick = SDL_GetPerformanceCounter();
-
 const Uint8 *keystate = SDL_GetKeyboardState(NULL);
 while (gameRunning)
 {
@@ -99,19 +97,8 @@ while (gameRunning)
     currentTick = SDL_GetPerformanceCounter();
     deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
 
-
-    if (keystate[SDL_SCANCODE_W]){
-        PlayerEntity.move(0, deltaTime);
-    }
-    if (keystate[SDL_SCANCODE_A]){
-        PlayerEntity.move(1, deltaTime);
-    }
-    if (keystate[SDL_SCANCODE_D]){
-        PlayerEntity.move(2, deltaTime);
-    }
-    if (keystate[SDL_SCANCODE_S]){
-        PlayerEntity.move(5, deltaTime);
-    }
+    PlayerEntity.move(deltaTime,keystate);
+    
 
     std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
     PlayerEntity.collision(grassEntities, deltaTime);
@@ -132,7 +119,7 @@ while (gameRunning)
                     {
                     case SDLK_f:  window.ToggleFullscreen(); break;
                     case SDLK_q: gameRunning = false; break;
-                    case SDLK_e: PlayerEntity.reset(); PlayerEntity.pos.x = 0; PlayerEntity.pos.y =0;
+                    case SDLK_e: PlayerEntity.reset();break;
 
                     }
                 }

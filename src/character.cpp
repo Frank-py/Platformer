@@ -7,10 +7,6 @@ Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
 :Entity(p_pos, p_tex){
         currentFrame.w = 64;
         currentFrame.h = 64;
-
-        framesAmount.x = 4;
-        framesAmount.y = 2;
-        
 }
 void Character::reset()  {
         GRAVITY = 0.08;
@@ -18,6 +14,8 @@ void Character::reset()  {
         acceleration.y = 0;
         velocity.x = 0;
         velocity.y = 0;
+        pos.x = 0;
+        pos.y = 0;
         
         
 
@@ -26,41 +24,40 @@ void Character::reset()  {
 void Character::Animation(){
         static int counter = 0;
         ++counter;
-        if (counter == 20){
+        if (counter == 32){
                 counter = 0;
-                currentFrame.y = (currentFrame.y == 0) ? 1 : 0;
+               // currentFrame.y = (currentFrame.y == 0) ? 1 : 0;
                 currentFrame.x = 0;
         }
-        if (counter % 5 == 0)
+        if (counter % 8 == 0)
         {
                 currentFrame.x += 64;
         }
 }
 
 
-void Character::move(int dir, int time)
+void Character::move(int time,const Uint8* keystate)
 {
 
         
-
-   switch (dir)
-        {
-                case 0: //  up
-                        acceleration.y = -ACCEL;
-                        acceleration.y += GRAVITY;
-                        
-                        break;
-                case 1: // left
-                        acceleration.x = -ACCEL;
-                        acceleration.y += GRAVITY;
-                        break;
-                case 2: // right
-                        acceleration.x = +ACCEL;
-                        acceleration.y += GRAVITY;
-                        break;
-                default:
-                        break;
-        }
+if (keystate[SDL_SCANCODE_W]){
+       acceleration.y = -ACCEL;
+        acceleration.y += GRAVITY;
+    }
+    if (keystate[SDL_SCANCODE_A]){
+        acceleration.x = -ACCEL;
+        acceleration.y += GRAVITY;
+        
+    }
+    if (keystate[SDL_SCANCODE_D]){
+        acceleration.x = +ACCEL;
+        acceleration.y += GRAVITY;
+    }
+    if (keystate[SDL_SCANCODE_S]){
+        acceleration.x = +ACCEL;
+        acceleration.y += GRAVITY;
+    }
+   
         return;
         
 }

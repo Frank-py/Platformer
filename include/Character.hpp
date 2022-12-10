@@ -11,9 +11,9 @@ class Character: public Entity
 public:
     Character(Vector2f p_pos, SDL_Texture* p_tex);
     std::vector<SDL_Rect> animationFrames;
-    Vector2f frame_size, framesAmount;
+    Vector2f frame_size;
     void Animation();
-    void move(int dir, int time);
+    void move(int time, const Uint8* keystate);
     void update(int time);
     void reset();
     Vector2f velocity = Vector2f();
