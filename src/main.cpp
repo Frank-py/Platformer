@@ -101,9 +101,10 @@ while (gameRunning)
     
 
     std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
-    PlayerEntity.collision(grassEntities, deltaTime);
-    PlayerEntity.update(deltaTime);
-    std::cout << std::endl;
+    //PlayerEntity.collision(grassEntities, deltaTime);
+
+    PlayerEntity.update(grassEntities,deltaTime);
+    //std::cout << std::endl;
     
     
 

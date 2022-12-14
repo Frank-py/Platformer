@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Entity.hpp"
-#include <Math.hpp>
 #include <vector>
 #include "Math.hpp"
 #include "Grass.hpp"
@@ -14,7 +13,7 @@ public:
     Vector2f frame_size;
     void Animation();
     void move(int time, const Uint8* keystate);
-    void update(int time);
+    void update(std::vector<Entity> Entities,int time);
     void reset();
     Vector2f velocity = Vector2f();
 	bool collision(std::vector<Entity> Entities, int time);
@@ -22,5 +21,5 @@ public:
 private:
     Vector2f acceleration = Vector2f();
     const double ACCEL = 0.5;
-    double GRAVITY = 0.000005;
+    double GRAVITY = 0.025;
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include "Math.hpp"
 struct Vector2f
 {
   Vector2f()
@@ -52,6 +51,6 @@ struct Vector2f
     *this = *this + other;
     return *this;
   }
-
+  
   float x, y;
 };
