@@ -76,11 +76,17 @@ if (keystate[SDL_SCANCODE_W]){
 void Character::update(std::vector<Entity> Entities,int time)
 {
         Animation();
-        acceleration.y += GRAVITY;
+        fvelocity = faccel * time;
         acceleration.x *= 0.9;
+        faccel.y = acceleration.y;
+
+        faccel.x = acceleration.x;
+
+        acceleration.y += GRAVITY;
         velocity = acceleration * time;
 
        collision(Entities,time);
+
         
          pos += velocity;
         
@@ -101,24 +107,28 @@ void Character::update(std::vector<Entity> Entities,int time)
 
 bool Character::collision(std::vector<Entity> Entities, int time) {
         
-
-        // Vector2f fvelocity = velocity;
+       
         // fvelocity = acceleration * time;
+        
          Vector2f fpos = pos;
-         fpos += velocity;
+        // Vector2f faccel;
+        //faccel.x = acceleration.x;
+        // faccel.y = acceleration.y - GRAVITY;
+        //fvelocity = faccel * time;
+         fpos += fvelocity;
+        
 
 for (Entity e: Entities)
         {
                 if ((fpos.y+getCurrentFrame().h*4 > e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+getCurrentFrame().w*4 > e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) {
                        // std::cout << "collision" << std::endl;  
-                       
                        // velocity.x = 0;                   
-                //if ((velocity.x != 0 ) && (velocity.y != 0) ) {
+                if ((fvelocity.x != 0 ) && (fvelocity.y != 0) ) {
                 //    std::cout << "shit shit shit" << std::endl;
-              
-              //  velocity = Vector2f();
-               //     return true;
-               // } 
+              acceleration = Vector2f();
+                velocity = Vector2f();
+                    return true;
+                } 
                 //  if (velocity.x != 0 && velocity.y != 0) {
                 //         //acceleration.x = 0;
                 //         velocity = Vector2f();
@@ -127,7 +137,7 @@ for (Entity e: Entities)
 
                 //     return true;
                 // } 
-                 if (velocity.y != 0) {
+                 if (fvelocity.y != 0) {
                         //acceleration.y = 0;
                         acceleration.y = 0;
                         velocity.y = 0;
@@ -135,7 +145,7 @@ for (Entity e: Entities)
 
                     return true;
                 } 
-                else if (velocity.x != 0){
+                else if (fvelocity.x != 0){
                         acceleration.x = 0;
                         velocity.x = 0;
                 }
