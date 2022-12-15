@@ -75,15 +75,15 @@ SDL_Texture* grass = window.loadTexture("bin/debug/res/gfx/ground_grass_1.png");
 SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idlee.png");
 SDL_Texture* Hintergrund = window.loadTexture("bin/debug/res/gfx/sky.png");
 //std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
-std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
-for (int i = 128; i < DM.w; i+=128)
+std::vector<Grass> grassEntitiees;
+for (int i = 0; i < DM.w; i+=128)
 {
     grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
 };
 grassEntitiees.push_back(Grass(Vector2f(200, 700), grass));
 grassEntitiees.push_back(Grass(Vector2f(0, DM.h-2*128), grass));
-Character PlayerEntity = Character(Vector2f(DM.w/2, 0), Player);
-Camera Camera = Camera(PlayerEntity.pos);
+Character PlayerEntity = Character(Vector2f(0, 0), Player);
+Camera cam= Camera(PlayerEntity.pos);
 
 
 
@@ -106,7 +106,12 @@ while (gameRunning)
     //PlayerEntity.collision(grassEntities, deltaTime);
 
     PlayerEntity.update(grassEntities,deltaTime);
-    Camera.updateCamera(PlayerEntity.pos);
+    cam.updateCamera(PlayerEntity.pos);
+    // for (Entity a : grassEntitiees)
+    // {
+    //     a.updatePos(cam.offset);
+    // }
+    
     //std::cout << std::endl;
     
     
@@ -123,7 +128,9 @@ while (gameRunning)
                     {
                     case SDLK_f:  window.ToggleFullscreen(); break;
                     case SDLK_q: gameRunning = false; break;
-                    case SDLK_e: PlayerEntity.reset();break;
+                    case SDLK_e: PlayerEntity.reset(0, 0); 
+                    cam = Camera(PlayerEntity.pos);
+                    break;
 
                     }
                 }
@@ -132,10 +139,12 @@ while (gameRunning)
 
             window.clear();
             window.renderbg(Hintergrund, DM.w, DM.h);
-            window.render(PlayerEntity, Vector2f(0,0));
+            std::cout << PlayerEntity.pos.x << " " << PlayerEntity.pos.y << std::endl;
+            window.render(PlayerEntity, Vector2f(0, 0));
             for (Grass& e : grassEntitiees)
             { 
-                    window.render(e, Camera.offset);
+                    window.render(e, cam.offset);
+                    //window.render(e, Vector2f(0,0));
             }
             window.display();
 }

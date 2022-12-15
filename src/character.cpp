@@ -8,14 +8,14 @@ Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
         currentFrame.w = 38;
         currentFrame.h = 42;
 }
-void Character::reset()  {
+void Character::reset(int pos_x, int pos_y)  {
         GRAVITY = 0.025;
         acceleration.x = 0;
         acceleration.y = 0;
         velocity.x = 0;
         velocity.y = 0;
-        pos.x = 0;
-        pos.y = 0;
+        pos.x = pos_x;
+        pos.y = pos_y;
         
         
 

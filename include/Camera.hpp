@@ -11,6 +11,6 @@ public:
     Vector2f offset;
 
 private:
-    float velocity = 0.5;
+    float velocity = 1;
     Vector2f pos;
 };

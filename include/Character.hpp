@@ -14,7 +14,7 @@ public:
     void Animation();
     void move(int time, const Uint8* keystate);
     void update(std::vector<Entity> Entities,int time);
-    void reset();
+    void reset(int pos_x, int pos_y);
     Vector2f velocity = Vector2f();
 	void collision(std::vector<Entity> Entities, int time);
 

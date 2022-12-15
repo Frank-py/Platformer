@@ -22,6 +22,10 @@ public:
 		pos.x = posold.x;
 		pos.y = posold.y;
 	}
+	void updatePos(Vector2f offset) {
+		pos.x = pos.x + offset.x;
+		pos.y = pos.y + offset.y;
+	}
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
 	SDL_Rect currentFrame;
