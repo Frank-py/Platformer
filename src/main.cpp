@@ -71,7 +71,7 @@ RenderWindow window("Spiel", DM.w, DM.h);
 
 
 SDL_Texture* grass = window.loadTexture("bin/debug/res/gfx/ground_grass_1.png");
-SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idle.png");
+SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idle1.png");
 SDL_Texture* Hintergrund = window.loadTexture("bin/debug/res/gfx/sky.png");
 //std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
 std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
