@@ -107,10 +107,10 @@ while (gameRunning)
 
     PlayerEntity.update(grassEntities,deltaTime);
     cam.updateCamera(PlayerEntity.pos);
-    // for (Entity a : grassEntitiees)
-    // {
-    //     a.updatePos(cam.offset);
-    // }
+    for (Entity a : grassEntitiees)
+    {
+        a.updatePos(cam.offset);
+    }
     
     //std::cout << std::endl;
     

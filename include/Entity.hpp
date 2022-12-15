@@ -24,7 +24,6 @@ public:
 	}
 	void updatePos(Vector2f offset) {
 		pos.x = pos.x + offset.x;
-		pos.y = pos.y + offset.y;
 	}
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
