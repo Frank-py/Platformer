@@ -38,31 +38,38 @@ void Character::Animation(){
 void Character::move(int time,const Uint8* keystate)
 {
 
-        
+       GRAVITY *= 1.08;
+        bool flag = false;
 if (keystate[SDL_SCANCODE_W]){
-       acceleration.y = -ACCEL;
+       acceleration.y = -ACCEL*0.8;
        std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
+       flag = true;
 
     }
     if (keystate[SDL_SCANCODE_A]){
         acceleration.x = -ACCEL;
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
+       flag = true;
         
         
     }
     if (keystate[SDL_SCANCODE_D]){
         acceleration.x = +ACCEL;
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
+       flag = true;
         
     }
     if (keystate[SDL_SCANCODE_S]){
         acceleration.y = +ACCEL;
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
+       flag = true;
     }
 
         acceleration.x *= 0.9;
         acceleration.y += GRAVITY;
 
+        if (!flag)
+            Animation();
       
    
         return;
@@ -72,7 +79,6 @@ if (keystate[SDL_SCANCODE_W]){
 
 void Character::update(std::vector<Entity> Entities,int time)
 {
-        Animation();
         velocity = acceleration * time;
         collision(Entities,time);
         pos.x += velocity.x;
@@ -104,7 +110,10 @@ for (Entity e: Entities)
                 if ((fpos.y+(getCurrentFrame().h)*4> e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (pos.x+(getCurrentFrame().w)*4> e.pos.x && pos.x < e.pos.x+e.getCurrentFrame().w*4)) {
                         velocity.y = 0;
                         acceleration.y = 0;
-                        }
+                        if (fpos.y >= pos.y)
+                                GRAVITY = 0.025;
+
+                }
 
         }
 }
