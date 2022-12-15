@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "RenderWindow.hpp"
+#include "Camera.hpp"
 #include "Entity.hpp"
 #include "Grass.hpp"
 #include "Character.hpp"
@@ -82,6 +83,7 @@ for (int i = 128; i < DM.w; i+=128)
 grassEntitiees.push_back(Grass(Vector2f(200, 700), grass));
 grassEntitiees.push_back(Grass(Vector2f(0, DM.h-2*128), grass));
 Character PlayerEntity = Character(Vector2f(DM.w/2, 0), Player);
+Camera Camera = Camera(PlayerEntity.pos);
 
 
 
@@ -104,6 +106,7 @@ while (gameRunning)
     //PlayerEntity.collision(grassEntities, deltaTime);
 
     PlayerEntity.update(grassEntities,deltaTime);
+    Camera.updateCamera(PlayerEntity.pos);
     //std::cout << std::endl;
     
     
@@ -129,10 +132,10 @@ while (gameRunning)
 
             window.clear();
             window.renderbg(Hintergrund, DM.w, DM.h);
-            window.render(PlayerEntity);
+            window.render(PlayerEntity, Vector2f(0,0));
             for (Grass& e : grassEntitiees)
             { 
-                    window.render(e);
+                    window.render(e, Camera.offset);
             }
             window.display();
 }

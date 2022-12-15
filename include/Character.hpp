@@ -20,8 +20,6 @@ public:
 
 private:
     Vector2f acceleration = Vector2f();
-     Vector2f faccel = Vector2f();
-    Vector2f fvelocity = Vector2f(); 
     const double ACCEL = 1;
     double GRAVITY = 0.025;
 };

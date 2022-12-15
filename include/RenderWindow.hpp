@@ -11,7 +11,7 @@ public:
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void cleanUp();
 	void clear();
-	void render(Entity& p_entity);
+	void render(Entity& p_entity, Vector2f offset);
 	void renderbg(SDL_Texture* tex, int Groesex, int Groesey);
 
 	void ToggleFullscreen();

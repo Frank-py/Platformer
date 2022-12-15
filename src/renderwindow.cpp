@@ -56,7 +56,7 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
-void RenderWindow::render(Entity& p_entity)
+void RenderWindow::render(Entity& p_entity, Vector2f offset)
 {
 	SDL_Rect src; 
 	src.x = p_entity.getCurrentFrame().x;
@@ -65,8 +65,8 @@ void RenderWindow::render(Entity& p_entity)
 	src.h = p_entity.getCurrentFrame().h;
 
 	SDL_Rect dst;
-	dst.x = p_entity.getPos().x;
-	dst.y = p_entity.getPos().y;
+	dst.x = p_entity.getPos().x + offset.x;
+	dst.y = p_entity.getPos().y + offset.y;
 	dst.w = p_entity.getCurrentFrame().w * 4;
 	dst.h = p_entity.getCurrentFrame().h * 4;
 
