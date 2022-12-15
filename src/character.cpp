@@ -5,7 +5,7 @@
 #include <iostream>
 Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
 :Entity(p_pos, p_tex){
-        currentFrame.w = 39;
+        currentFrame.w = 38;
         currentFrame.h = 42;
 }
 void Character::reset()  {
