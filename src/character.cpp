@@ -26,7 +26,6 @@ void Character::Animation(){
         ++counter;
         if (counter == 32){
                 counter = 0;
-               // currentFrame.y = (currentFrame.y == 0) ? 1 : 0;
                 currentFrame.x = 0;
         }
         if (counter % 8 == 0)
@@ -60,11 +59,9 @@ if (keystate[SDL_SCANCODE_W]){
         acceleration.y = +ACCEL;
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
     }
-    //if (!keystate[SDL_SCANCODE_S]&&!keystate[SDL_SCANCODE_D]&&!keystate[SDL_SCANCODE_A]&&!keystate[SDL_SCANCODE_W])
-   // {
+
         acceleration.x *= 0.9;
-  //  }
-    
+        acceleration.y += GRAVITY;
 
       
    
@@ -76,26 +73,19 @@ if (keystate[SDL_SCANCODE_W]){
 void Character::update(std::vector<Entity> Entities,int time)
 {
         Animation();
-        fvelocity = faccel * time;
-        acceleration.x *= 0.9;
-        faccel.y = acceleration.y;
+       
 
-        faccel.x = acceleration.x;
 
-        acceleration.y += GRAVITY;
         velocity = acceleration * time;
 
        collision(Entities,time);
 
         
-         pos += velocity;
+         pos.x += velocity.x;
+         pos.y += velocity.y;
         
        
-        //pos += velocity * time;
-        
-
-        
-        //acceleration = Vector2f();
+  
         
 
 
@@ -108,55 +98,31 @@ void Character::update(std::vector<Entity> Entities,int time)
 bool Character::collision(std::vector<Entity> Entities, int time) {
         
        
-        // fvelocity = acceleration * time;
         
          Vector2f fpos = pos;
-        // Vector2f faccel;
-        //faccel.x = acceleration.x;
-        // faccel.y = acceleration.y - GRAVITY;
-        //fvelocity = faccel * time;
          fpos += fvelocity;
         
 
 for (Entity e: Entities)
         {
                 if ((fpos.y+getCurrentFrame().h*4 > e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+getCurrentFrame().w*4 > e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) {
-                       // std::cout << "collision" << std::endl;  
-                       // velocity.x = 0;                   
-                if ((fvelocity.x != 0 ) && (fvelocity.y != 0) ) {
-                //    std::cout << "shit shit shit" << std::endl;
-              acceleration = Vector2f();
-                velocity = Vector2f();
+                if ((velocity.x != 0 ) && (velocity.y != 0) ) {
+                        velocity = Vector2f();
                     return true;
                 } 
-                //  if (velocity.x != 0 && velocity.y != 0) {
-                //         //acceleration.x = 0;
-                //         velocity = Vector2f();
-                //         acceleration = Vector2f();
-                //          GRAVITY = 0;  
-
-                //     return true;
-                // } 
-                 if (fvelocity.y != 0) {
-                        //acceleration.y = 0;
-                        acceleration.y = 0;
+                if (velocity.y != 0) {
                         velocity.y = 0;
-                        GRAVITY = 0;  
-
-                    return true;
+                        return true;
                 } 
-                else if (fvelocity.x != 0){
-                        acceleration.x = 0;
+                if (velocity.x != 0){
                         velocity.x = 0;
+                        break;
+                        
                 }
 
                 }
 
-        else
-        {
-                GRAVITY = 0.025;
-        }
-        }
-        
+}
+
         return false;
 }
