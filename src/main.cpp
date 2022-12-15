@@ -73,9 +73,8 @@ RenderWindow window("Spiel", DM.w, DM.h);
 SDL_Texture* grass = window.loadTexture("bin/debug/res/gfx/ground_grass_1.png");
 SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idlee.png");
 SDL_Texture* Hintergrund = window.loadTexture("bin/debug/res/gfx/sky.png");
-//std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
-std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
-for (int i = 128; i < DM.w; i+=128)
+std::vector<Grass> grassEntitiees;
+for (int i = -128*10; i < DM.w*10; i+=128)
 {
     grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
 };
@@ -104,6 +103,8 @@ while (gameRunning)
     //PlayerEntity.collision(grassEntities, deltaTime);
 
     PlayerEntity.update(grassEntities,deltaTime);
+
+    
     //std::cout << std::endl;
     
     
