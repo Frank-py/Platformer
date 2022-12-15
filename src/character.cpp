@@ -73,16 +73,10 @@ if (keystate[SDL_SCANCODE_W]){
 void Character::update(std::vector<Entity> Entities,int time)
 {
         Animation();
-       
-
-
         velocity = acceleration * time;
-
-       collision(Entities,time);
-
-        
-         pos.x += velocity.x;
-         pos.y += velocity.y;
+        collision(Entities,time);
+        pos.x += velocity.x;
+        pos.y += velocity.y;
         
        
   
@@ -95,34 +89,20 @@ void Character::update(std::vector<Entity> Entities,int time)
 
 
 
-bool Character::collision(std::vector<Entity> Entities, int time) {
+void Character::collision(std::vector<Entity> Entities, int time) {
         
        
         
          Vector2f fpos = pos;
-         fpos += fvelocity;
+         fpos += velocity;
         
 
 for (Entity e: Entities)
         {
-                if ((fpos.y+getCurrentFrame().h*4 > e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+getCurrentFrame().w*4 > e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) {
-                if ((velocity.x != 0 ) && (velocity.y != 0) ) {
-                        velocity = Vector2f();
-                    return true;
-                } 
-                if (velocity.y != 0) {
-                        velocity.y = 0;
-                        return true;
-                } 
-                if (velocity.x != 0){
+                if ((pos.y+getCurrentFrame().h*4 > e.pos.y && pos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+getCurrentFrame().w*4 > e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) 
                         velocity.x = 0;
-                        break;
-                        
-                }
+                if ((fpos.y+getCurrentFrame().h*4 > e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (pos.x+getCurrentFrame().w*4 > e.pos.x && pos.x < e.pos.x+e.getCurrentFrame().w*4)) 
+                        velocity.y = 0;
 
-                }
-
-}
-
-        return false;
+        }
 }

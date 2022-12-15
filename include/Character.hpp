@@ -16,7 +16,7 @@ public:
     void update(std::vector<Entity> Entities,int time);
     void reset();
     Vector2f velocity = Vector2f();
-	bool collision(std::vector<Entity> Entities, int time);
+	void collision(std::vector<Entity> Entities, int time);
 
 private:
     Vector2f acceleration = Vector2f();
