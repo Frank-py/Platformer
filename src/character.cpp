@@ -5,7 +5,8 @@
 #include <iostream>
 Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
 :Entity(p_pos, p_tex){
-        currentFrame.w = 64;
+        currentFrame.y = 0;
+        currentFrame.w = 40;
         currentFrame.h = 64;
 }
 void Character::reset()  {
@@ -26,11 +27,11 @@ void Character::Animation(){
         ++counter;
         if (counter == 32){
                 counter = 0;
-                currentFrame.x = 0;
+                currentFrame.x = 10;
         }
         if (counter % 8 == 0)
         {
-                currentFrame.x += 64;
+                currentFrame.x += 10;
         }
 }
 
@@ -99,10 +100,12 @@ void Character::collision(std::vector<Entity> Entities, int time) {
 
 for (Entity e: Entities)
         {
-                if ((pos.y+getCurrentFrame().h*4 > e.pos.y && pos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+getCurrentFrame().w*4 > e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) 
+                if ((pos.y+getCurrentFrame().h*4> e.pos.y && pos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+(getCurrentFrame().w)*4> e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) 
                         velocity.x = 0;
-                if ((fpos.y+getCurrentFrame().h*4 > e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (pos.x+getCurrentFrame().w*4 > e.pos.x && pos.x < e.pos.x+e.getCurrentFrame().w*4)) 
+                if ((fpos.y+(getCurrentFrame().h)*4> e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (pos.x+(getCurrentFrame().w)*4> e.pos.x && pos.x < e.pos.x+e.getCurrentFrame().w*4)) {
                         velocity.y = 0;
+                        acceleration.y = 0;
+                        }
 
         }
 }
