@@ -5,8 +5,7 @@
 #include <iostream>
 Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
 :Entity(p_pos, p_tex){
-        currentFrame.y = 0;
-        currentFrame.w = 40;
+        currentFrame.w = 64;
         currentFrame.h = 64;
 }
 void Character::reset()  {
@@ -27,11 +26,11 @@ void Character::Animation(){
         ++counter;
         if (counter == 32){
                 counter = 0;
-                currentFrame.x = 10;
+                currentFrame.x = 0;
         }
         if (counter % 8 == 0)
         {
-                currentFrame.x += 10;
+                currentFrame.x += 64;
         }
 }
 
