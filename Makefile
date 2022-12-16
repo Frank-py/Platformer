@@ -5,5 +5,7 @@ windows:
 
 release:
 	g++ -c src/*.cpp -std=c++14 -O3 -Wall -m64 -I include && g++ *.o -o bin/release/main -s -L -lSDL2main -lSDL2 -lSDL2_image &&  ./bin/release/main
-clean:
+cleanwin:
 	del *.o
+clean:
+	rm *.o
