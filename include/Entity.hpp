@@ -22,10 +22,6 @@ public:
 		pos.x = posold.x;
 		pos.y = posold.y;
 	}
-	void updatePos(Vector2f entitypos) {
-		pos.x = pos.x - entitypos.x;
-		pos.y = pos.y - entitypos.y;
-	}
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
 	SDL_Rect currentFrame;

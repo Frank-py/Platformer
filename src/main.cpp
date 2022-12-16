@@ -76,13 +76,31 @@ SDL_Texture* Player = window.loadTexture("bin/debug/res/gfx/Idlee.png");
 SDL_Texture* Hintergrund = window.loadTexture("bin/debug/res/gfx/sky.png");
 //std::vector<Grass> grassEntitiees = {Grass(Vector2f(0, DM.h-128), grass)};
 std::vector<Grass> grassEntitiees;
-for (int i = 0; i < DM.w; i+=128)
+for (int i = -1*DM.w; i < DM.w; i+=128)
 {
-    grassEntitiees.push_back(Grass(Vector2f(i, DM.h-128), grass));
+    grassEntitiees.push_back(Grass(Vector2f(i, 1*DM.h), grass));
 };
-grassEntitiees.push_back(Grass(Vector2f(200, 700), grass));
-grassEntitiees.push_back(Grass(Vector2f(0, DM.h-2*128), grass));
-Character PlayerEntity = Character(Vector2f(0, 0), Player);
+for (int i = -1*DM.w; i < DM.w; i+=128)
+{
+    grassEntitiees.push_back(Grass(Vector2f(i, DM.h+128), grass));
+};
+for (int i = -1*DM.w; i < DM.w; i+=128)
+{
+    grassEntitiees.push_back(Grass(Vector2f(i, DM.h+2*128), grass));
+};
+
+for (int i = -1*DM.w; i < DM.w; i+=128)
+{
+    grassEntitiees.push_back(Grass(Vector2f(i, DM.h+3*128), grass));
+};
+for (int i = -1*DM.w; i < DM.w; i+=128)
+{
+    grassEntitiees.push_back(Grass(Vector2f(i, DM.h+4*128), grass));
+};
+
+
+grassEntitiees.push_back(Grass(Vector2f(200, 1000), grass));
+Character PlayerEntity = Character(Vector2f(0, DM.h-32*4), Player);
 Camera cam= Camera(PlayerEntity.pos);
 cam.updateCamera(PlayerEntity.pos, DM.w, DM.h);
 
@@ -100,6 +118,8 @@ while (gameRunning)
     currentTick = SDL_GetPerformanceCounter();
     deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
 
+
+    
     PlayerEntity.move(deltaTime,keystate);
     
 
@@ -107,12 +127,6 @@ while (gameRunning)
     std::cout << "grassEntities[0].x: " << grassEntities[0].pos.x << ", grassEntities[0].y: " << grassEntities[0].pos.y << std::endl;  
     PlayerEntity.update(grassEntities,deltaTime);
     cam.updateCamera(PlayerEntity.pos, DM.w, DM.h);
-
-    for (Entity& i : grassEntities)
-    {
-        i.updatePos(Vector2f(1,1));
-    }
-    
     
     //std::cout << std::endl;
     
@@ -142,10 +156,10 @@ while (gameRunning)
             window.clear();
             window.renderbg(Hintergrund, DM.w, DM.h);
             std::cout << PlayerEntity.pos.x << " " << PlayerEntity.pos.y << std::endl;
-            window.render(PlayerEntity, Vector2f(0, 0));
+            window.render(PlayerEntity, cam.pos);
             for (Entity& e : grassEntities)
             { 
-                    window.render(e, Vector2f());
+                    window.render(e, cam.pos);
                     //window.render(e, Vector2f(0,0));
             }
             window.display();

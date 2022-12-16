@@ -10,7 +10,7 @@ Camera::Camera(Vector2f p_pos)
 
 void Camera::updateCamera(Vector2f p_pos, int width, int height){
 
-    pos.x = p_pos.x - (width / 2);
-    pos.y = p_pos.y - (height / 2);
+    pos.x = p_pos.x - width/2;
+    pos.y = p_pos.y - height/2;
 }
 
