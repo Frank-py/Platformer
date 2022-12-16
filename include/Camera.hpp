@@ -7,10 +7,10 @@ class Camera
 {
 public:
     Camera(Vector2f p_pos);
-    void updateCamera(Vector2f p_pos);
-    Vector2f offset;
+    void updateCamera(Vector2f p_pos, int width, int height);
 
-private:
-    float velocity = 1;
+
     Vector2f pos;
+private:
+    float velocity = 0.5;
 };

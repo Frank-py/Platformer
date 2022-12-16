@@ -84,7 +84,9 @@ grassEntitiees.push_back(Grass(Vector2f(200, 700), grass));
 grassEntitiees.push_back(Grass(Vector2f(0, DM.h-2*128), grass));
 Character PlayerEntity = Character(Vector2f(0, 0), Player);
 Camera cam= Camera(PlayerEntity.pos);
+cam.updateCamera(PlayerEntity.pos, DM.w, DM.h);
 
+std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
 
 
 
@@ -94,7 +96,6 @@ SDL_Event event;
 const Uint8 *keystate = SDL_GetKeyboardState(NULL);
 while (gameRunning)
 {
-    Vector2f alte = PlayerEntity.getPosCopy();
     lastTick = currentTick;
     currentTick = SDL_GetPerformanceCounter();
     deltaTime = (double)((currentTick - lastTick)*1000 / (double)SDL_GetPerformanceFrequency() );
@@ -102,15 +103,16 @@ while (gameRunning)
     PlayerEntity.move(deltaTime,keystate);
     
 
-    std::vector <Entity> grassEntities(grassEntitiees.begin(), grassEntitiees.end());
     //PlayerEntity.collision(grassEntities, deltaTime);
-
+    std::cout << "grassEntities[0].x: " << grassEntities[0].pos.x << ", grassEntities[0].y: " << grassEntities[0].pos.y << std::endl;  
     PlayerEntity.update(grassEntities,deltaTime);
-    cam.updateCamera(PlayerEntity.pos);
-    for (Entity a : grassEntitiees)
+    cam.updateCamera(PlayerEntity.pos, DM.w, DM.h);
+
+    for (Entity& i : grassEntities)
     {
-        a.updatePos(cam.offset);
+        i.updatePos(Vector2f(1,1));
     }
+    
     
     //std::cout << std::endl;
     
@@ -141,9 +143,9 @@ while (gameRunning)
             window.renderbg(Hintergrund, DM.w, DM.h);
             std::cout << PlayerEntity.pos.x << " " << PlayerEntity.pos.y << std::endl;
             window.render(PlayerEntity, Vector2f(0, 0));
-            for (Grass& e : grassEntitiees)
+            for (Entity& e : grassEntities)
             { 
-                    window.render(e, cam.offset);
+                    window.render(e, Vector2f());
                     //window.render(e, Vector2f(0,0));
             }
             window.display();
