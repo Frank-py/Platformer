@@ -38,10 +38,10 @@ void Character::Animation(){
 void Character::move(int time,const Uint8* keystate)
 {
 
-       GRAVITY *= 1.08;
+       GRAVITY *= 1.05;
         bool flag = false;
 if (keystate[SDL_SCANCODE_W]){
-       acceleration.y = -ACCEL*0.8;
+       acceleration.y = -ACCEL*0.5;
        std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
        flag = true;
 
@@ -80,6 +80,9 @@ if (keystate[SDL_SCANCODE_W]){
 void Character::update(std::vector<Entity> Entities,int time)
 {
         velocity = acceleration * time;
+        if (velocity.y == 0) {
+                GRAVITY = 0.025;
+        }
         collision(Entities,time);
         pos.x += velocity.x;
         pos.y += velocity.y;
