@@ -1,12 +1,13 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 
 RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
-	:window(NULL), renderer(NULL)
+	:window(NULL), renderer(NULL)  
 {
 	window = SDL_CreateWindow(p_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, p_w, p_h, SDL_WINDOW_SHOWN);
 
@@ -33,6 +34,7 @@ RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 
 	ToggleFullscreen();
 	SDL_ShowCursor(1);
+
 	}
 
 SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
@@ -55,7 +57,111 @@ void RenderWindow::clear()
 {
 	SDL_RenderClear(renderer);
 }
+int RenderWindow::displayWelcomeMessage(TTF_Font* font128, TTF_Font* comment, int height, int width) {
+	SDL_Rect textRect;
+    SDL_Texture* textTexture;
+	SDL_Rect textRectComment;
+    SDL_Texture* textTextureComment;
+  std::cout << "test" << std::endl;
+  SDL_Color textColor = {255, 0, 0};
+  SDL_Color textColorComment = {0, 0, 0};
+  SDL_Surface* textSurface = TTF_RenderText_Blended(font128, "Welcome to my Platformer game", textColor);
+  if (!textSurface) {
+    fprintf(stderr, "Failed to render text surface: %s\n", TTF_GetError());
+    return 1;
+  }
+  SDL_Surface* textSurfaceComment = TTF_RenderText_Blended(comment, "Press anywhere on Screen to play!", textColorComment);
+  if (!textSurfaceComment) {
+    fprintf(stderr, "Failed to render text surface: %s\n", TTF_GetError());
+    return 1;
+  }
 
+  // Create a texture from the rendered text surface and set its blend mode to alpha blending
+  textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+  SDL_SetTextureBlendMode(textTexture, SDL_BLENDMODE_BLEND);
+
+  textTextureComment = SDL_CreateTextureFromSurface(renderer, textSurfaceComment);
+  SDL_SetTextureBlendMode(textTextureComment, SDL_BLENDMODE_BLEND);
+  // Calculate the position of the text so it is centered on the screen
+  textRect.w = textSurface->w;
+  textRect.h = textSurface->h;
+  textRect.x = (width - textRect.w) / 2;
+  textRect.y = (height - textRect.h) / 2;
+
+  textRectComment.w = textSurfaceComment->w;
+  textRectComment.h = textSurfaceComment->h;
+  textRectComment.x = (width - textRectComment.w) / 2;
+  textRectComment.y = (height - textRectComment.h) / 2 + height/10;
+  SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+  SDL_RenderCopy(renderer, textTextureComment, NULL, &textRectComment);
+    SDL_RenderPresent(renderer);
+  // Set the flag to false initially
+  bool playButtonPressed = false;
+
+  // Loop until the "PLAY" button is pressed
+  while (!playButtonPressed) {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT) {
+        // If the user closes the window, exit the loop and the function
+        playButtonPressed = true;
+      } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+
+        // Check if the "PLAY" button was pressed
+        // int x, y;
+        // SDL_GetMouseState(&x, &y);
+        // if (x >= textRect.x && x <= textRect.x + textRect.w && y >= textRect.y && y <= textRect.y + textRect.h) {
+        //   // Set the flag to true and exit the loop
+          playButtonPressed = true;
+      } else if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym)
+                    {
+                    case SDLK_f:  ToggleFullscreen(); break;
+                    case SDLK_q: 
+						SDL_DestroyTexture(textTexture);
+  						SDL_FreeSurface(textSurface);
+						return 1;
+                    }
+	  }
+    }
+
+    // Render the text
+    
+  }
+
+  // Destroy the texture and free the surface after the loop
+  SDL_DestroyTexture(textTexture);
+  SDL_FreeSurface(textSurface);
+  return 0;
+}
+
+// void RenderWindow::displayWelcomeMessage(TTF_Font* font, int height, int width) {
+
+// 	std::cout << "test" << std::endl;
+//   SDL_Color textColor = {255, 0, 0};
+//   SDL_Surface* textSurface = TTF_RenderText_Blended(font, "Welcome to my Platformer game", textColor);
+//   if (!textSurface) {
+//     fprintf(stderr, "Failed to render text surface: %s\n", TTF_GetError());
+//     return;
+//   }
+
+//   // Create a texture from the rendered text surface and set its blend mode to alpha blending
+//   textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+//   SDL_SetTextureBlendMode(textTexture, SDL_BLENDMODE_BLEND);
+
+//   // Calculate the position of the text so it is centered on the screen
+//   textRect.w = textSurface->w;
+//   textRect.h = textSurface->h;
+//   textRect.x = (width - textRect.w) / 2;
+//   textRect.y = (height - textRect.h) / 2;
+
+//   SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+  
+// 	SDL_RenderPresent(renderer);
+//   SDL_Delay(10000);
+//   SDL_DestroyTexture(textTexture);
+//   SDL_FreeSurface(textSurface);
+// }
 void RenderWindow::render(Entity& p_entity, Vector2f offset)
 {
 	SDL_Rect src; 
