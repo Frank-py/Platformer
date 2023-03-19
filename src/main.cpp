@@ -55,7 +55,7 @@ RenderWindow window("Spiel", DM.w, DM.h);
 SDL_Texture* Hintergrund = window.loadTexture("bin/debug/res/gfx/sky.png");
 
 window.renderbg(Hintergrund, DM.w, DM.h);
-if (window.displayWelcomeMessage(font128, comment, DM.h, DM.w) == 1) {
+if (window.displayWelcomeMessage(font128, comment, DM.h, DM.w, "Welcome to my Game") == 1) {
     window.cleanUp();
     // TTF_CloseFont(font32);
     // TTF_CloseFont(font24);
@@ -79,7 +79,7 @@ for (int i = -1*DM.w; i < DM.w; i+=128)
 };
 
 
-grassEntitiees.push_back(Grass(Vector2f(200, 1000), grass));
+grassEntitiees.push_back(Grass(Vector2f(200, 1200), grass));
 Character PlayerEntity = Character(Vector2f(0, DM.h-32*4), Player);
 Camera cam= Camera(PlayerEntity.pos);
 cam.updateCamera(PlayerEntity.pos, DM.w, DM.h);
@@ -107,6 +107,10 @@ while (gameRunning)
     //PlayerEntity.collision(grassEntities, deltaTime);
     std::cout << "grassEntities[0].x: " << grassEntities[0].pos.x << ", grassEntities[0].y: " << grassEntities[0].pos.y << std::endl;  
     PlayerEntity.update(grassEntities,deltaTime);
+    if (PlayerEntity.checkifdead(DM.h)) {
+        window.displayWelcomeMessage(font128, comment, DM.h, DM.w, "You Died!");
+        PlayerEntity.reset(0,0);
+    }
     cam.updateCamera(PlayerEntity.pos, DM.w, DM.h);
     
     //std::cout << std::endl;

@@ -10,7 +10,7 @@ class RenderWindow
 {
 public:
 	RenderWindow(const char* p_title, int p_w, int p_h);
-    int displayWelcomeMessage(TTF_Font* font128, TTF_Font* comment, int height, int width);
+    int displayWelcomeMessage(TTF_Font* font128, TTF_Font* comment, int height, int width, const char* text);
     
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void cleanUp();

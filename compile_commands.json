@@ -1,0 +1,92 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++14",
+      "-g",
+      "-Wall",
+      "-m64",
+      "-I",
+      "include",
+      "src/camera.cpp"
+    ],
+    "directory": "/home/daniel/Project/anothergame/physik",
+    "file": "/home/daniel/Project/anothergame/physik/src/camera.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++14",
+      "-g",
+      "-Wall",
+      "-m64",
+      "-I",
+      "include",
+      "src/character.cpp"
+    ],
+    "directory": "/home/daniel/Project/anothergame/physik",
+    "file": "/home/daniel/Project/anothergame/physik/src/character.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++14",
+      "-g",
+      "-Wall",
+      "-m64",
+      "-I",
+      "include",
+      "src/entity.cpp"
+    ],
+    "directory": "/home/daniel/Project/anothergame/physik",
+    "file": "/home/daniel/Project/anothergame/physik/src/entity.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++14",
+      "-g",
+      "-Wall",
+      "-m64",
+      "-I",
+      "include",
+      "src/grass.cpp"
+    ],
+    "directory": "/home/daniel/Project/anothergame/physik",
+    "file": "/home/daniel/Project/anothergame/physik/src/grass.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++14",
+      "-g",
+      "-Wall",
+      "-m64",
+      "-I",
+      "include",
+      "src/main.cpp"
+    ],
+    "directory": "/home/daniel/Project/anothergame/physik",
+    "file": "/home/daniel/Project/anothergame/physik/src/main.cpp"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++14",
+      "-g",
+      "-Wall",
+      "-m64",
+      "-I",
+      "include",
+      "src/renderwindow.cpp"
+    ],
+    "directory": "/home/daniel/Project/anothergame/physik",
+    "file": "/home/daniel/Project/anothergame/physik/src/renderwindow.cpp"
+  }
+]

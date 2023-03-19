@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include <string>
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
@@ -57,7 +58,7 @@ void RenderWindow::clear()
 {
 	SDL_RenderClear(renderer);
 }
-int RenderWindow::displayWelcomeMessage(TTF_Font* font128, TTF_Font* comment, int height, int width) {
+int RenderWindow::displayWelcomeMessage(TTF_Font* font128, TTF_Font* comment, int height, int width, const char* text) {
 	SDL_Rect textRect;
     SDL_Texture* textTexture;
 	SDL_Rect textRectComment;
@@ -65,7 +66,7 @@ int RenderWindow::displayWelcomeMessage(TTF_Font* font128, TTF_Font* comment, in
   std::cout << "test" << std::endl;
   SDL_Color textColor = {255, 0, 0};
   SDL_Color textColorComment = {0, 0, 0};
-  SDL_Surface* textSurface = TTF_RenderText_Blended(font128, "Welcome to my Platformer game", textColor);
+  SDL_Surface* textSurface = TTF_RenderText_Blended(font128, text, textColor);
   if (!textSurface) {
     fprintf(stderr, "Failed to render text surface: %s\n", TTF_GetError());
     return 1;

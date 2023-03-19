@@ -17,9 +17,12 @@ public:
     void reset(int pos_x, int pos_y);
     Vector2f velocity = Vector2f();
 	void collision(std::vector<Entity> Entities, int time);
+    int checkifdead(int height);
 
 private:
     Vector2f acceleration = Vector2f();
-    const double ACCEL = 1;
-    double GRAVITY = 0.025;
+    const double ACCEL_X = 1;
+    const double ACCEL_Y = 2;
+    bool allowedtojump = false;
+    double GRAVITY = 0.05;
 };

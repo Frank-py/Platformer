@@ -9,7 +9,7 @@ Character::Character(Vector2f p_pos, SDL_Texture* p_tex)
         currentFrame.h = 42;
 }
 void Character::reset(int pos_x, int pos_y)  {
-        GRAVITY = 0.025;
+        GRAVITY = 0.05;
         acceleration.x = 0;
         acceleration.y = 0;
         velocity.x = 0;
@@ -38,32 +38,32 @@ void Character::Animation(){
 void Character::move(int time,const Uint8* keystate)
 {
 
-       GRAVITY *= 1.05;
+       //GRAVITY *= 1.05;
         bool flag = false;
-if (keystate[SDL_SCANCODE_W]){
-       acceleration.y = -ACCEL*0.5;
-       std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
+if (keystate[SDL_SCANCODE_W] && acceleration.y == 0){
+       acceleration.y += -ACCEL_Y;
        flag = true;
+       allowedtojump = false;
 
     }
     if (keystate[SDL_SCANCODE_A]){
-        acceleration.x = -ACCEL;
+        acceleration.x = -ACCEL_X;
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
        flag = true;
         
         
     }
     if (keystate[SDL_SCANCODE_D]){
-        acceleration.x = +ACCEL;
+        acceleration.x = +ACCEL_X;
         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
        flag = true;
         
     }
-    if (keystate[SDL_SCANCODE_S]){
-        acceleration.y = +ACCEL;
-        std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
-       flag = true;
-    }
+//     if (keystate[SDL_SCANCODE_S]){
+//         acceleration.y = +ACCEL;
+//         std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
+//        flag = true;
+//     }
 
         acceleration.x *= 0.9;
         acceleration.y += GRAVITY;
@@ -87,6 +87,7 @@ void Character::update(std::vector<Entity> Entities,int time)
         pos.x += velocity.x;
         pos.y += velocity.y;
         
+       std::cout << "velocity x: " << velocity.x << "velocity y:" << velocity.y << "\t acceleration x:" << acceleration.x << "acceleration y:" << acceleration.y << std::endl;
        
   
         
@@ -94,7 +95,14 @@ void Character::update(std::vector<Entity> Entities,int time)
 
 }
 
+int Character::checkifdead(int height) {
+        if (pos.y > height*2) {
+                return 1;
+        }
+        return 0;
 
+
+}
 
 
 
@@ -111,10 +119,18 @@ for (Entity e: Entities)
                 if ((pos.y+getCurrentFrame().h*4> e.pos.y && pos.y < e.pos.y+e.getCurrentFrame().h*4) && (fpos.x+(getCurrentFrame().w)*4> e.pos.x && fpos.x < e.pos.x+e.getCurrentFrame().w*4)) 
                         velocity.x = 0;
                 if ((fpos.y+(getCurrentFrame().h)*4> e.pos.y && fpos.y < e.pos.y+e.getCurrentFrame().h*4) && (pos.x+(getCurrentFrame().w)*4> e.pos.x && pos.x < e.pos.x+e.getCurrentFrame().w*4)) {
-                        velocity.y = 0;
+                        if (!allowedtojump) { 
+                        velocity.y = 2;
+                        acceleration.y = 2;
+                        allowedtojump = true;
+                        }
+                        else {
                         acceleration.y = 0;
-                        if (fpos.y >= pos.y)
-                                GRAVITY = 0.025;
+                        velocity.y = 0;
+
+
+                        }
+                        
 
                 }
 
